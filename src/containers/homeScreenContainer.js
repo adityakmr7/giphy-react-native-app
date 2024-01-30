@@ -11,6 +11,7 @@ const homeScreenContainer = (WrappedComponent) => (props) => {
   }, []);
 
   const handleOnEndReached = () => {};
+
   return (
     <WrappedComponent
       data={trendingState?.data}

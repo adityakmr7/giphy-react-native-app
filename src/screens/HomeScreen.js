@@ -4,26 +4,40 @@ import {
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React from "react";
 import { AppLoader } from "../components";
 import SearchInputContainer from "../containers/SearchInputContainer";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: wWidth } = Dimensions.get("window");
 const IMAGE_WIDTH = wWidth * 0.5 - 20;
 
-const renderItem = ({ item, index }) => {
+const RenderItemView = ({ item }) => {
+  const navigation = useNavigation();
+  const handleNavigation = () => {
+    navigation.navigate("Detail", {
+      id: item?.id,
+    });
+  };
   return (
-    <View key={index}>
-      <Image
-        style={{ width: IMAGE_WIDTH, height: IMAGE_WIDTH }}
-        source={{
-          uri: item?.images?.original?.url,
-        }}
-      />
-    </View>
+    <TouchableOpacity onPress={handleNavigation}>
+      <View>
+        <Image
+          style={{ width: IMAGE_WIDTH, height: IMAGE_WIDTH }}
+          source={{
+            uri: item?.images?.original?.url,
+          }}
+        />
+      </View>
+    </TouchableOpacity>
   );
+};
+
+const renderItem = ({ item, index }) => {
+  return <RenderItemView item={item} key={index} />;
 };
 
 const HomeScreen = ({ data = [], trendingState = {}, handleOnEndReached }) => {

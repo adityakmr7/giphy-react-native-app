@@ -40,9 +40,22 @@ const AppContextProvider = ({ children }) => {
       });
     }
   };
+
+  const getSelectedGifData = (id) => {
+    const { data: trendingData } = state.trending;
+    const { data: searchData } = state.search;
+    const data = trendingData || searchData;
+    return data?.find((item) => item.id === id);
+  };
   return (
     <AppContext.Provider
-      value={{ state, dispatch, fetchTrendingGifs, handleSearchGifs }}
+      value={{
+        state,
+        dispatch,
+        fetchTrendingGifs,
+        handleSearchGifs,
+        getSelectedGifData,
+      }}
     >
       {children}
     </AppContext.Provider>
