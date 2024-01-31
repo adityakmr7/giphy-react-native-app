@@ -1,17 +1,21 @@
 import {
+  Button,
   Dimensions,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useTheme } from "../ThemeContext/ThemeContext";
+import { ResizeMode, Video } from "expo-av";
 
 const { height: wHeight } = Dimensions.get("window");
 const GifDetailScreen = ({ data = {}, handleDownload, handleShare }) => {
   const { theme } = useTheme();
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
   return (
     <View
       style={[
@@ -21,12 +25,29 @@ const GifDetailScreen = ({ data = {}, handleDownload, handleShare }) => {
           : { backgroundColor: "#fff" },
       ]}
     >
-      <Image
+      <Video
+        shouldPlay={true}
+        ref={video}
+        resizeMode={ResizeMode.CONTAIN}
         style={styles.image}
+        videoStyle={styles.image}
         source={{
-          uri: data?.images?.original?.url,
+          uri: data?.images?.original?.mp4,
         }}
+        isLooping={true}
+        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
+
+      <View style={styles.buttons}>
+        <Button
+          title={status.isPlaying ? "Pause" : "Play"}
+          onPress={() =>
+            status.isPlaying
+              ? video.current.pauseAsync()
+              : video.current.playAsync()
+          }
+        />
+      </View>
       <View style={styles.rowContainer}>
         <TouchableOpacity onPress={handleDownload} style={styles.button}>
           <FontAwesome5 name="download" size={20} color="#555" />
