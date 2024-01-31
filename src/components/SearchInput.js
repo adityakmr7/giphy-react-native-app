@@ -16,7 +16,6 @@ const SearchInput = ({ onSearch, searchText = "" }) => {
         placeholder="Search"
         value={searchText}
         onChangeText={handleSearch}
-        onSubmitEditing={handleSearch}
       />
       <Feather name="search" size={24} color="black" onPress={handleSearch} />
     </View>
