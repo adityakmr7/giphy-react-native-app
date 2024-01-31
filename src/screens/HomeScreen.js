@@ -11,6 +11,7 @@ import React from "react";
 import { AppLoader } from "../components";
 import SearchInputContainer from "../containers/SearchInputContainer";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../ThemeContext/ThemeContext";
 
 const { width: wWidth } = Dimensions.get("window");
 const IMAGE_WIDTH = wWidth * 0.5 - 20;
@@ -41,11 +42,19 @@ const renderItem = ({ item, index }) => {
 };
 
 const HomeScreen = ({ data = [], trendingState = {}, handleOnEndReached }) => {
+  const { theme, toggleTheme } = useTheme();
   if (trendingState.loading) return <AppLoader />;
 
   if (trendingState.error) return <Text>{trendingState.error}</Text>;
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme === "dark"
+          ? { backgroundColor: "#121212" }
+          : { backgroundColor: "#fff" },
+      ]}
+    >
       <View style={{ marginBottom: 10 }}>
         <SearchInputContainer />
       </View>

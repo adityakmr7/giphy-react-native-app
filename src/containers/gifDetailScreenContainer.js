@@ -9,6 +9,7 @@ const gifDetailScreenContainer = (WrappedComponent) => (props) => {
   const { getSelectedGifData } = useAppContext();
   const gifData = getSelectedGifData(params?.id);
   const gifUrl = gifData?.images?.original?.url;
+
   const handleDownload = async () => {
     // Add logic for download action
     await gifService.downloadAndSave(gifUrl);

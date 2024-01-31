@@ -7,11 +7,20 @@ import {
   View,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useTheme } from "../ThemeContext/ThemeContext";
 
 const { height: wHeight } = Dimensions.get("window");
 const GifDetailScreen = ({ data = {}, handleDownload, handleShare }) => {
+  const { theme } = useTheme();
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme === "dark"
+          ? { backgroundColor: "#121212" }
+          : { backgroundColor: "#fff" },
+      ]}
+    >
       <Image
         style={styles.image}
         source={{
